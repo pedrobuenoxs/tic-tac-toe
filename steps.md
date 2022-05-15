@@ -4,7 +4,7 @@ to do:
 - [x] marcar a posiçao da jogada
 - [x] nao sobrepor
 - [x] alternar entre os jogadores a cada rodada
-- [ ] verificar se há um vencedor
+- [x] verificar se há um vencedor
 - [ ] caso todas as opcoes estejam preenchidas, e não tenha um vencedor, exibir a mensagem 'DEU VELHA'
 
 extra:
