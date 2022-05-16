@@ -1,6 +1,12 @@
 var readlineSync = require('readline-sync');
 
 
+console.log(`\nBem vindos ao jogo da velha,  as regras são simples.\n`)
+console.log(`-- Desenhe a base do jogo: três linhas por três colunas
+-- À vez, cada jogador coloca a sua marca onde pretender (um joga com “0”, outro jogador com “X”)
+-- O objetivo do jogo é fazer uma sequência de três símbolos iguais, seja em linha vertical, horizontal ou diagonal, enquanto tenta impedir que seu adversário faça o mesmo
+-- Quando um dos participantes faz uma linha, ganha o jogo
+-- Começa do início, normalmente trocando os símbolos escolhidos.`)
 let game = true;
 const players = {
   1:" ",
@@ -10,6 +16,20 @@ const scores = {
   playerOne:0,
   playerTwo:0
 }
+
+function showTutorial() {
+  console.log(`
+  ### Escolha a posiçao que deseja jogar baseado no tabuleiro abaixo ###\n
+     0 | 1 | 2
+    -----------
+     3 | 4 | 5
+    -----------
+     6 | 7 | 8\n
+  ######################################################################
+  `);
+}
+
+showTutorial();
 
 while(game){
 
@@ -57,17 +77,7 @@ while(game){
     `);
   }
   
-  function showTutorial() {
-    console.log(`
-    ### Escolha a posiçao que deseja jogar baseado no tabuleiro abaixo ###
-       0 | 1 | 2
-      -----------
-       3 | 4 | 5
-      -----------
-       6 | 7 | 8
-    ######################################################################
-    `);
-  }
+  
   
   function isEmpty(position) {
     return boardData[position] === emptyString;
@@ -96,7 +106,7 @@ while(game){
         boardData[position] = currentPlayer; //posicionando a jogada do player
   
         changePlayer(currentPlayer); //trocando de jogador
-  
+        console.log(`\n O lugar escolhido foi: ${position}`)
         drawBoard(boardData); //desenhando o tabuleiro atualizado
   
         actualMove++ //registrando a jogada
@@ -155,21 +165,20 @@ while(game){
   
   function keepGaming(){
     status =  readlineSync.question(`Deseja jogar outra partida? (S/N)\n`)
-    let choose = false
+    let choose = true
     
-    while(!choose){
+    while(choose){
       console.log(status)
       if(status.toLowerCase() == 's'){
         game = true;     
-        choose = true
+        return choose = true
       } 
       if (status.toLowerCase() == 'n'){
         game = false;
-        choose = true;
+        return choose = true
 
       } else {
         console.log('Comando inválido')
-
         status =  readlineSync.question(`Deseja jogar outra partida? (S/N)\n`)
         
       }
@@ -189,7 +198,11 @@ while(game){
     {
       scores.playerTwo++
     }
-    return scores  
+    return {
+      'Player 1': scores.playerOne,
+      'Player 2': scores.playerTwo
+
+    }  
   }
   
   
@@ -199,6 +212,7 @@ while(game){
   logMoves(boardData);
   
   console.log(showWinner(boardData,winnerMoves));
+  console.log(`\n Placar:`)
   console.log(countScore())
 
 
